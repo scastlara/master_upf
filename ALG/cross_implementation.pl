@@ -26,11 +26,11 @@ sub cross {
 	my @newstart = ();
   
 	if ($n % 2 == 0) {
-	$dirs  = $s_dir;
-	$force = $l;
+		$dirs  = $s_dir;
+		$force = $l;
 	} else {
-	$dirs  = $o_dir;
-	$force = $l / 1.41; # Pythagorean theorem
+		$dirs  = $o_dir;
+		$force = $l / 1.41; # Pythagorean theorem
 	}
 
 	foreach my $point (@$init) {
