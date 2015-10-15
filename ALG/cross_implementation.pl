@@ -30,10 +30,10 @@ sub cross {
 		$dirs = $o_dir;
 	}
 
-	foreach my $i (@$init) {
+	foreach my $point (@$init) {
 		foreach my $dir (@$dirs) {
-			my $endpoint = [$l*$dir->[0] + $i->[0], $l*$dir->[1] + $i->[1]];
-			$img->moveTo($i->[0],$i->[1]);
+			my $endpoint = [$l*$dir->[0] + $point->[0], $l*$dir->[1] + $point->[1]];
+			$img->moveTo($point->[0],$point->[1]);
 			$img->lineTo($endpoint->[0],$endpoint->[1]);
 			push @newstart, $endpoint;
 		}
