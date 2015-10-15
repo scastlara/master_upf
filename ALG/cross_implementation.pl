@@ -21,20 +21,23 @@ print $img->png;
 sub cross {
 	my ($n, $nmax, $init, $s_dir, $o_dir, $l, $img) = @_;
 	my $dirs;
+	my $force = 0;
 	
 	my @newstart = ();
   
 	if ($n % 2 == 0) {
-	$dirs = $s_dir;
+	$dirs  = $s_dir;
+	$force = $l;
 	} else {
-	$dirs = $o_dir;
+	$dirs  = $o_dir;
+	$force = $l / 1.41; # Pythagorean theorem
 	}
 
 	foreach my $point (@$init) {
 	foreach my $dir (@$dirs) {
 		my $endpoint = [
-			$l*$dir->[0] + $point->[0], 
-			$l*$dir->[1] + $point->[1]
+			$force*$dir->[0] + $point->[0], 
+			$force*$dir->[1] + $point->[1]
 		];
 		$img->moveTo($point->[0],$point->[1]);
 		$img->lineTo($endpoint->[0],$endpoint->[1]);
