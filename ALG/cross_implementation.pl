@@ -20,28 +20,25 @@ print $img->png;
 #-- FUNCTIONS --#
 sub cross {
 	my ($n, $nmax, $init, $s_dir, $o_dir, $l, $img) = @_;
+	my $dirs;
 	
 	my @newstart = ();
 	
 	if ($n % 2 == 0) {
-		foreach my $i (@$init) {
-			foreach my $dir (@$s_dir) {
-				my $endpoint = [$l*$dir->[0] + $i->[0], $l*$dir->[1] + $i->[1]];
-				$img->moveTo($i->[0],$i->[1]);
-    			$img->lineTo($endpoint->[0],$endpoint->[1]);
-				push @newstart, $endpoint;
-			}
-		}
+		$dirs = $s_dir;
 	} else {
-		foreach my $i (@$init) {
-			foreach my $dir (@$o_dir) {
-				my $endpoint = [$l*$dir->[0] + $i->[0], $l*$dir->[1] + $i->[1]];
-				$img->moveTo($i->[0],$i->[1]);
-    			$img->lineTo($endpoint->[0],$endpoint->[1]);
-				push @newstart, $endpoint;
-			}
+		$dirs = $o_dir;
+	}
+
+	foreach my $i (@$init) {
+		foreach my $dir (@$dirs) {
+			my $endpoint = [$l*$dir->[0] + $i->[0], $l*$dir->[1] + $i->[1]];
+			$img->moveTo($i->[0],$i->[1]);
+			$img->lineTo($endpoint->[0],$endpoint->[1]);
+			push @newstart, $endpoint;
 		}
 	}
+	
 	return if $n == $nmax;
 	$n++;
 	cross($n, $nmax, \@newstart, $s_dir, $o_dir, $l/2, $img);
