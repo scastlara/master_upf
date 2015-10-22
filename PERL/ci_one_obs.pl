@@ -118,5 +118,5 @@ print "(hits:resamplings) ratio = ", $hits/$resamplings, "\n";
 # Verification is attained as the ratio $hits / $resamplings is
 # higher than $confidence as the $resamplings gets larger.
 
-print "Average CI length = ", $length;
+print "Average CI length = ", $length, "\n";
 $R->stop();
