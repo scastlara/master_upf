@@ -5,7 +5,7 @@ local $/ = ">"; # This magic variable changes the record separator.
                 # It will make the diamond operator read from > to >
                 # By default it is set to "\n", that's why <> reads "line" by "line".
                 
-my $motif = "C.{2,4}C.{3}[LIVMFYWC].{8}H.{3,5}H";
+my $motif = "C[.{2}.{4}]C.{3}[LIVMFYWC].{8}H.{3,5}H";
 <>; # Skip first blank "line"
 
 while(<>){
