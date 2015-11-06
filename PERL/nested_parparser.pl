@@ -1,5 +1,13 @@
+#!/usr/bin/perl
+
+# This program doesn't do anything useful.
+# It's only a way to parse a text like this:
+# (aaa(bbb(ccc)bbb)aaa)
+# It can be extended to do interesting things (maybe some Perl-RNA project :P)
+
 use strict;
 use warnings;
+
 
 my %substring = (); 
 my @saved;
