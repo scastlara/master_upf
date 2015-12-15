@@ -3,7 +3,6 @@ use warnings;
 use strict;
 use Gauss qw(solve_system);
 
-
 my $x_system = [
 #    a         b       c    v1   b1
     [3.023, 15.761, 22.868, 1, 3.023  ],
@@ -68,6 +67,15 @@ foreach my $atom (keys %{$init_coords}) {
 
 
 # --------
+#
+open(O, ">rotated_ligand_2WY4.coord");
+print O "###The format of this file is (coordinates only have 6 positions):\n###ATOM_number\tX_coord\tY_coord\tZ_coord\n\n\n";
+my @atoms = sort { $a <=> $b } keys %final_coords;          #In order to write the atoms in the right order
+foreach my $at (@atoms){
+    my ($x,$y,$z) = @{$final_coords{$at}};             #The coordinates are splitted in x, y, z components before saving them to the file
+    print O "$at\t$x\t$y\t$z\n";
+};
+
 sub build_affinity {
     my $results_array = shift;
     my $LM = ();
@@ -122,15 +130,37 @@ sub read_coords {
     return (\%atom_coords);
 }
 
+sub sum_vector{
+    my $i_vector  = shift;
+    my $tr_vector = shift;
+    my @f_vector;
+    for my $i (0..$#{$i_vector}){
+        $f_vector[$i] = $i_vector->[$i] + $tr_vector->[$i];
+    }
+    return (\@f_vector);
+}
+
+sub matrix_x_vector{
+    my $matrix = shift;
+    my $vector = shift;
+    my @f_coord;
+    for my $row (0..$#{$matrix}){
+        foreach my $vars ($matrix->[$row]){
+            foreach my $co (0..$#{$vars}){
+                $f_coord[$row] += $vars->[$co]*$vector->[$co];
+            }
+        }
+    }
+    return(\@f_coord);
+}
+
 sub affine_map {
     my $atom      = shift;
     my $i_coords  = shift;
-    my $f_coords  = shift;
+    my $f_coords  = shift; #hash
     my $lm_matrix = shift;
     my $tr_vector = shift;
-
-    
+    my $tmp_vector = matrix_x_vector($lm_matrix, $i_coords);
+    $f_coords->{$atom} = sum_vector($tmp_vector, $tr_vector);
+    return ($f_coords);
 }
-
-
-use Data::Dumper;

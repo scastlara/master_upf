@@ -45,7 +45,7 @@ foreach my $pos (@positions){
 
 open(O, ">ligand_2WY4.coord");
 print O "###The format of this file is (coordinates only have 6 positions):\n###ATOM_number\tX_coord\tY_coord\tZ_coord\n\n\n";
-my @positions = sort { $a <=> $b } keys %new_ligand;          #In order to write the atoms in the right order
+@positions = sort { $a <=> $b } keys %new_ligand;          #In order to write the atoms in the right order
 foreach my $pos (@positions){
     my ($x,$y,$z) = split(';',$new_ligand{$pos});             #The coordinates are splitted in x, y, z components before saving them to the file
     print O "$pos\t$x\t$y\t$z\n";
